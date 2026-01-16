@@ -1,0 +1,34 @@
+# Environment
+.env
+venv/
+env/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Vector DB
+chroma_db/
+*.db
+
+# Uploads
+uploads/
+temp_*.pdf
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
