@@ -1,23 +1,19 @@
-# 📚 PDF RAG Chatbot
+# PDF RAG Chatbot
 
-A production-ready chatbot that ingests PDF documents, creates vector embeddings, and answers questions using LangGraph-powered RAG pipeline.
+A production-ready chatbot that ingests PDF documents, creates vector embeddings, and answers questions using LangGraph-powered RAG pipeline with Ollama.
 
----
-
-## ✨ Features
+## Features
 
 - Upload and process PDF documents
 - Intelligent text chunking with overlap
 - Vector embeddings using sentence-transformers
 - ChromaDB for efficient similarity search
 - LangGraph-powered RAG pipeline
-- Multiple LLM support (OpenAI, Groq, or local)
+- Ollama integration for local LLM inference
 - FastAPI backend with REST API
 - Streamlit web interface
 
----
-
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # 1. Create virtual environment
@@ -28,54 +24,43 @@ source venv/bin/activate  # Mac/Linux
 # 2. Install dependencies
 pip install -r requirements.txt
 
-# 3. Create .env file (copy from .env.example)
-copy .env.example .env  # Windows
-cp .env.example .env    # Mac/Linux
+# 3. Install and run Ollama
+# Download from: https://ollama.ai
+ollama run llama2
 
-# 4. Run the app
+# 4. In another terminal, run the app
 streamlit run app.py
 ```
 
 The app will open at **http://localhost:8501**
 
----
+## Ollama Setup (Local LLM)
 
-## 🔑 API Keys (Optional but Recommended)
+The system uses **Ollama** for local LLM inference - no API keys needed!
 
-The system works **without any API keys** using local embeddings and fallback responses.
-
-For **better quality answers**, add one of these to your `.env` file:
-
-### Option 1: Groq (Free & Fast) ⭐ Recommended
+### Quick Setup:
 ```bash
-GROQ_API_KEY=gsk_your_key_here
-```
-- Get free key at: [console.groq.com](https://console.groq.com)
-- Fast inference
-- Generous free tier
-- Best for production
+# 1. Install Ollama from https://ollama.ai
 
-### Option 2: OpenAI (Paid)
-```bash
-OPENAI_API_KEY=sk_your_key_here
-```
-- Get key at: [platform.openai.com](https://platform.openai.com)
-- Pay-as-you-go pricing
-- GPT-3.5-turbo is cheap (~$0.002 per request)
-- Highest quality responses
+# 2. Pull a model (choose one):
+ollama pull llama2       # Recommended for general use
+ollama pull llama3       # Better quality, larger
+ollama pull mistral      # Fast and efficient
+ollama pull phi          # Lightweight
 
-### Option 3: Local (Free but slower)
-No API key needed - install Ollama:
-```bash
-# Install from ollama.ai
-ollama pull llama2
+# 3. Run your chosen model:
+ollama run llama2
 ```
 
----
+### Configuration (.env):
+```bash
+OLLAMA_MODEL=llama2
+OLLAMA_URL=http://localhost:11434
+```
 
-## 📖 Installation Steps
+That's it! The app will automatically connect to your local Ollama instance.
 
-## 📖 Installation Steps
+## Installation Steps
 
 ### 1. Install Python 3.9+
 Download from [python.org](https://www.python.org/downloads/)
@@ -92,45 +77,46 @@ source venv/bin/activate  # Mac/Linux
 pip install -r requirements.txt
 ```
 
-### 4. Configure Environment
+### 4. Configure Environment (Optional)
 ```bash
 # Copy the example file
 copy .env.example .env  # Windows
 cp .env.example .env    # Mac/Linux
 
-# Edit .env and add API keys (optional)
-# GROQ_API_KEY=your_key_here
+# Edit to change Ollama model if needed
+# OLLAMA_MODEL=llama2
 ```
 
-### 5. Run the Application
+### 5. Run Ollama
+```bash
+ollama run llama2
+```
+
+### 6. Run the Application
 ```bash
 streamlit run app.py
 ```
 
----
+## Usage
 
-## 🎯 Usage
-
-### 1️⃣ Upload PDF
-- Click **"📤 Upload Documents"** in sidebar
+### 1. Upload PDF
+- Click **"Upload Documents"** in sidebar
 - Select your PDF file(s)
-- Click **"🚀 Process PDF"**
+- Click **"Process PDF"**
 
-### 2️⃣ Ask Questions
+### 2. Ask Questions
 ```
 "What is this document about?"
 "Summarize the key findings"
 "What does it say about [topic]?"
 ```
 
-### 3️⃣ Get Answers with Sources
+### 3. Get Answers with Sources
 - View AI-generated answers
 - Check source citations
 - See exact page numbers
 
----
-
-## 💡 Advanced Usage
+## Advanced Usage
 
 ### Run API Separately
 
@@ -141,13 +127,6 @@ python main.py
 
 # Terminal 2: Start UI
 streamlit run app.py
-```
-
-### Test System
-
-```bash
-# Run diagnostic test
-python test_system.py
 ```
 
 ### Using API Programmatically
@@ -167,12 +146,10 @@ response = requests.post(
 print(response.json()["answer"])
 ```
 
----
-
-## 📁 Project Structure
+## Project Structure
 
 ```
-📦 Pipe/
+Pipe/
 ├── app.py                 # Streamlit UI
 ├── main.py                # FastAPI backend
 ├── pdf_processor.py       # PDF loading & chunking
@@ -184,13 +161,13 @@ print(response.json()["answer"])
 └── README.md              # This file
 ```
 
----
-
-## ⚙️ Configuration (.env)
-
-## ⚙️ Configuration (.env)
+## Configuration (.env)
 
 ```bash
+# Ollama Configuration
+OLLAMA_MODEL=llama2
+OLLAMA_URL=http://localhost:11434
+
 # Embeddings (no API key needed - runs locally)
 EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
 
@@ -198,73 +175,29 @@ EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
 CHUNK_SIZE=1000          # Characters per chunk
 CHUNK_OVERLAP=200        # Overlap between chunks
 TOP_K_RESULTS=4          # Number of chunks to retrieve
-
-# LLM API Keys (OPTIONAL - system works without these)
-# For better answers, add ONE of these:
-
-# Option 1: Groq (Free, recommended)
-# GROQ_API_KEY=gsk_your_key_here
-
-# Option 2: OpenAI (Paid)
-# OPENAI_API_KEY=sk_your_key_here
 ```
 
----
+## How It Works
 
-## 🎯 How It Works
+1. **Upload PDF** - System extracts and chunks text
+2. **Create Embeddings** - Local model converts text to vectors
+3. **Store in ChromaDB** - Vectors saved locally for fast search
+4. **Ask Question** - System finds relevant chunks
+5. **Generate Answer** - LLM creates response using Ollama
+6. **Show Sources** - See which PDF sections were used
 
-1. **Upload PDF** → System extracts and chunks text
-2. **Create Embeddings** → Local model converts text to vectors
-3. **Store in ChromaDB** → Vectors saved locally for fast search
-4. **Ask Question** → System finds relevant chunks
-5. **Generate Answer** → LLM (or fallback) creates response
-6. **Show Sources** → See which PDF sections were used
-
----
-
-## 🔧 Advanced Usage
-
-### Run API Separately
-```bash
-# Terminal 1: API
-python main.py
-# API docs: http://localhost:8000/docs
-
-# Terminal 2: UI
-streamlit run app.py
-```
-
-### Using API Directly
-```python
-import requests
-
-# Upload PDF
-files = {"file": open("document.pdf", "rb")}
-requests.post("http://localhost:8000/upload-pdf", files=files)
-
-# Ask question
-response = requests.post(
-    "http://localhost:8000/chat",
-    json={"question": "What is this about?"}
-)
-print(response.json()["answer"])
-```
-
----
-
-## 🐛 Troubleshooting
+## Troubleshooting
 
 | Issue | Solution |
 |-------|----------|
 | Import errors | `pip install -r requirements.txt` |
 | API won't start | Run `python main.py` |
-| Slow responses | Reduce `TOP_K_RESULTS=2` in `.env` |
+| Ollama not connecting | Make sure it's running: `ollama run llama2` |
+| Slow responses | Use smaller model: `ollama pull phi` |
 | Port 8000 in use | Change `API_PORT=8001` in `.env` |
 | Out of memory | Reduce `CHUNK_SIZE=500` in `.env` |
 
----
-
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Frontend:** Streamlit
 - **Backend:** FastAPI
@@ -272,16 +205,8 @@ print(response.json()["answer"])
 - **Vector DB:** ChromaDB (local, free)
 - **RAG:** LangGraph
 - **PDF Parser:** PyPDF
-- **LLM:** OpenAI / Groq / Local (all optional)
+- **LLM:** Ollama (local, free)
 
----
-
-## 📄 License
+## License
 
 MIT License - free to use for any project!
-
----
-
-## ⭐ Support
-
-If this helped you, please star the repo!

@@ -19,8 +19,5 @@ python-multipart==0.0.6
 python-dotenv==1.0.0
 requests==2.31.0
 
-# Optional LLM integrations (uncomment as needed)
-langchain-groq==0.0.10
-# openai==1.10.0
-# groq==0.4.1
-# langchain-openai==0.0.5
+# Ollama integration (local LLM)
+ollama>=0.1.0
