@@ -2,6 +2,9 @@
 
 A production-ready chatbot that ingests PDF documents, creates vector embeddings, and answers questions using LangGraph-powered RAG pipeline with Ollama.
 
+# LIVE DEMO WITH G-DRIVE LINK
+https://drive.google.com/file/d/1FZAK9k2nB_dZANVjc4R6UPTMYievQiUf/view?usp=sharing
+
 ## Features
 
 - Upload and process PDF documents
