@@ -17,23 +17,20 @@ A production-ready chatbot that ingests PDF documents, creates vector embeddings
 
 [View Project →](./pdf-rag-chatbot/README.md)
 
+### 2. [Google Veo 3 Video Generator](./veo-video-generator/)
+A Streamlit-based application for generating AI videos using Google's Veo 3 model.
+
+**Key Features:**
+- API key validation
+- Video generation with customizable settings
+- Multiple aspect ratios (16:9, 9:16, 1:1)
+- Configurable video duration
+- Download and view generated videos
+- Simple and intuitive interface
+
+[View Project →](./veo-video-generator/README.md)
+
 ---
-
-## Repository Structure
-
-```
-ML/Pipe/
-├── pdf-rag-chatbot/          # PDF RAG Chatbot project
-│   ├── app.py
-│   ├── main.py
-│   ├── pdf_processor.py
-│   ├── rag_pipeline.py
-│   ├── vector_store.py
-│   ├── requirements.txt
-│   └── README.md
-├── [future-project-2]/       # Your next project goes here
-└── README.md                 # This file
-```
 
 ## Getting Started
 
